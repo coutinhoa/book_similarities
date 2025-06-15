@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  book-postgresql:
+    image: 'bitnami/postgresql:15.3.0'
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRESQL_USERNAME=user
+      - POSTGRESQL_PASSWORD=very-secure-password
+      - POSTGRESQL_DATABASE=book_system
+
+volumes:
+  esdata:
+
+

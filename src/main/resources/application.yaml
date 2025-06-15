@@ -1,0 +1,19 @@
+application:
+  kafka:
+    event-listener-enabled: ${EVENT_LISTENER_ENABLED:false}
+  environment: ${ENVIROMENT:local}
+
+spring:
+  application-name: booking
+  datasource:
+    url: jdbc:postgresql://localhost:15432/book_system?createDatabaseIfNotExist=true&connectionCollation=utf8mb4_unicode_ci&serverTimezone=UTC
+    username: user
+    password: very-secure-password
+  elasticsearch:
+    uris: http://localhost:9200
+
+  kafka:
+    enabled: ${application.kafka.enabled}
+    reference-listener-enabled: ${KAFKA_REFERENCE_LISTENER_ENABLED:false}
+
+

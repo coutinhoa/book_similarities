@@ -1,0 +1,39 @@
+
+readAll() (All at Once Reading)
+How it works: readAll() reads the entire CSV file into memory as a List<String[]>.
+Each String[] in the list represents a row (record) from the CSV file.
+
+When it's best:
+Small Files: For small to medium-sized CSV files where the entire content can easily fit into memory,
+readAll() is convenient and straightforward.
+
+
+Disadvantages:
+Memory Intensive: This is the biggest drawback. For large files, readAll() can quickly lead
+to OutOfMemoryError because it attempts to load the entire file into your application's heap space.
+Performance: Can be slower for very large files as it needs to allocate and fill a large data
+structure in memory before you can even start processing.
+
+/*
+import com.opencsv.CSVReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
+public class CsvReadAllExample {
+    public static void main(String[] args) {
+        try (CSVReader reader = new CSVReader(new FileReader("your_file.csv"))) {
+            List<String[]> allRows = reader.readAll();
+            for (String[] row : allRows) {
+                // Process each row here
+                for (String cell : row) {
+                    System.out.print(cell + " ");
+                }
+                System.out.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}// This code reads all rows from a CSV file using OpenCSV and prints them to the console.
+*/
