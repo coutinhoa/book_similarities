@@ -1,20 +1,15 @@
-package com.example.booking;
+package com.example.booking.rest;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
-@Setter
 @Builder
-public class Book {
-
+public class BookResponse {
     private Long id;
     private String name;
     private String details;
-    private BigDecimal price;
+    private String price;
     private String image;
     private Boolean deleted = Boolean.FALSE;
     private String createdAt;

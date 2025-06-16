@@ -1,5 +1,6 @@
-package com.example.booking;
+package com.example.booking.rest;
 
+import com.example.booking.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,15 @@ import java.util.List;
 @RequestMapping("/api/v1/book")
 public class BookController {
 
-    private final ImportBooksFromCsvUseCase importBooksFromCsvUseCase;
-    private final BookMapper bookMapper;
+    private final SaveBooksUseCase saveBooksUseCase;
+    private final BookResponseMapper bookMapper;
     private final GetBooksUseCase getBooksUseCase;
     private final LoginValidationUseCase loginValidationUseCase;
+    private final SaveBookViewsUseCase saveBookViewsUseCase;
 
     @PostMapping
     public ResponseEntity<List<BookResponse>> saveBooks(@RequestParam("file") MultipartFile file) throws IOException {
-        List<Book> books = importBooksFromCsvUseCase.processAndSaveCsv(file);
+        List<Book> books = saveBooksUseCase.saveBooks(file);
         if (books.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -60,5 +62,38 @@ public class BookController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<List<BookViewResponse>> saveBookViews(@RequestParam("file") MultipartFile file) throws IOException {
+        List<BookView> bookViews = saveBookViewsUseCase.saveBookViewsFromCsv(file);
+        if (bookViews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(
+                bookViews.stream()
+                        .map(bookMapper::toResponse)
+                        .toList()
+        );
+    }
+
+    @GetMapping("/similarity")
+    public ResponseEntity<List<BookResponse>> getSimilarity(
+            @RequestParam(name = "bookId") Long bookId,
+            @RequestParam(name = "userEmail") String userEmail) {
+
+        saveBookViewsUseCase.createBookView(bookId, userEmail);
+        List<Book> similarBooks = getBooksUseCase.getSimilarBooks(bookId);
+
+        if (similarBooks.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(
+                similarBooks.stream()
+                        .map(bookMapper::toResponse)
+                        .toList()
+        );
     }
 }

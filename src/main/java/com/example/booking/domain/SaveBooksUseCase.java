@@ -1,5 +1,6 @@
-package com.example.booking;
+package com.example.booking.domain;
 
+import com.example.booking.persistence.BookWriteStorage;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -20,11 +21,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ImportBooksFromCsvUseCase {
+public class SaveBooksUseCase {
 
-    private final BookRepository bookRepository;
+    private final BookWriteStorage bookWriteStorage;
 
-    public List<Book> processAndSaveCsv(MultipartFile file) throws IOException {
+    public List<Book> saveBooks(MultipartFile file) throws IOException {
         List<Book> books = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));) {
@@ -58,16 +59,11 @@ public class ImportBooksFromCsvUseCase {
                             .build();
 
                     books.add(book);
-
-                    List<BookEntity> bookEntities = books.stream()
-                            .map(new BookMapper()::toEntity)
-                            .toList();
-                    bookRepository.saveAll(bookEntities);
                 }
             }
         } catch (CsvException e) {
-                System.err.println("Error reading CSV file: " + e.getMessage());
+            System.err.println("Error reading CSV file: " + e.getMessage());
         }
-        return books;
+        return bookWriteStorage.saveAll(books);
     }
 }

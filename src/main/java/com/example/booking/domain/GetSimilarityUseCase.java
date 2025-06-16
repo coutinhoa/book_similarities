@@ -1,4 +1,4 @@
-package com.example.booking;
+package com.example.booking.domain;
 
 import lombok.Getter;
 

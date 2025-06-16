@@ -1,5 +1,6 @@
 package com.example.booking;
 
+import com.example.booking.domain.LoginValidationUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

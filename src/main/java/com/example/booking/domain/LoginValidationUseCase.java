@@ -1,4 +1,4 @@
-package com.example.booking;
+package com.example.booking.domain;
 
 
 import jakarta.validation.constraints.NotNull;

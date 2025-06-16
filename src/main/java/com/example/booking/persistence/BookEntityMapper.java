@@ -1,11 +1,10 @@
-package com.example.booking;
+package com.example.booking.persistence;
 
+import com.example.booking.domain.Book;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class BookMapper {
+public class BookEntityMapper {
 
     public BookEntity toEntity(Book book) {
         if (book == null) {
@@ -35,20 +34,5 @@ public class BookMapper {
                 .deleted(bookEntity.getDeleted())
                 .createdAt(bookEntity.getCreatedAt())
                 .build();
-    }
-
-    public BookResponse toResponse(Book book) {
-        if (book == null) {
-            return null;
-        }
-        return BookResponse.builder()
-                .id(book.getId())
-                .name(book.getName())
-                .details(book.getDetails())
-                .price(String.valueOf(book.getPrice()))
-                .image(book.getImage())
-                .createdAt(book.getCreatedAt())
-                .build();
-
     }
 }

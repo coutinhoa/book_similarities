@@ -1,14 +1,14 @@
-package com.example.booking;
+package com.example.booking.persistence;
 
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,4 +41,7 @@ public class BookEntity {
 
     @Column(name = "created_at", nullable = false)
     private String createdAt;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<BookViewEntity> views;
 }
