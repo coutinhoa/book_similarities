@@ -55,7 +55,7 @@ public class BookController {
         boolean isValid = loginValidationUseCase.validateLogin(email);
 
         if (isValid) {
-            URI redirectUri = URI.create("/");
+            URI redirectUri = URI.create("/api/v1/book");
             return ResponseEntity.status(HttpStatus.FOUND)
                     .location(redirectUri)
                     .build();
@@ -64,7 +64,7 @@ public class BookController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/views")
     public ResponseEntity<List<BookViewResponse>> saveBookViews(@RequestParam("file") MultipartFile file) throws IOException {
         List<BookView> bookViews = saveBookViewsUseCase.saveBookViewsFromCsv(file);
         if (bookViews.isEmpty()) {

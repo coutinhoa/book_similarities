@@ -1,8 +1,6 @@
 package com.example.booking.domain;
 
 import com.example.booking.persistence.BookViewWriteStorage;
-import com.opencsv.CSVParser;
-import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -26,11 +24,8 @@ public class SaveBookViewsUseCase {
     public List<BookView> saveBookViewsFromCsv(MultipartFile file) throws IOException {
         List<BookView> bookViews = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));) {
-            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
-
-            try (CSVReader csvReader = new CSVReaderBuilder(reader)
-                    .withCSVParser(parser)
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
+             CSVReader csvReader = new CSVReaderBuilder(reader)
                     .withSkipLines(1)
                     .build()) {
 
@@ -40,16 +35,15 @@ public class SaveBookViewsUseCase {
                         System.out.println("Skipping row with insufficient columns");
                         continue;
                     }
-                    Long id = Long.valueOf(nextLine[0].trim());
+                    Long bookId = Long.valueOf(nextLine[0].trim());
                     String user = nextLine[1].trim();
 
                     BookView bookView = BookView.builder()
-                            .id(id)
                             .userEmail(user)
+                            .bookId(bookId)
                             .build();
 
                     bookViews.add(bookView);
-                }
             }
         } catch (CsvException e) {
                 System.err.println("Error reading CSV file: " + e.getMessage());
@@ -59,8 +53,8 @@ public class SaveBookViewsUseCase {
 
     public void createBookView(Long bookId, String userEmail) {
         BookView bookView = BookView.builder()
-                .id(bookId)
                 .userEmail(userEmail)
+                .bookId(bookId)
                 .build();
         bookWriteStorage.saveBookView(bookView);
     }

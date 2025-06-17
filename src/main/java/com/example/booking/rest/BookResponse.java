@@ -1,7 +1,10 @@
 package com.example.booking.rest;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -12,5 +15,7 @@ public class BookResponse {
     private String price;
     private String image;
     private Boolean deleted = Boolean.FALSE;
-    private String createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
 }

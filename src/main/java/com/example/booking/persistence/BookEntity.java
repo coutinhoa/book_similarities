@@ -1,13 +1,12 @@
 package com.example.booking.persistence;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,6 +16,8 @@ import java.util.List;
 @Entity
 @SQLDelete(sql = "UPDATE T_BOOK SET deleted = true WHERE id =?")
 @Where(clause = "deleted=false")
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookEntity {
 
     @Id
@@ -40,7 +41,7 @@ public class BookEntity {
     private Boolean deleted = Boolean.FALSE;
 
     @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<BookViewEntity> views;

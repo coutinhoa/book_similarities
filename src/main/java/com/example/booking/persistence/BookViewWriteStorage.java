@@ -1,15 +1,15 @@
 package com.example.booking.persistence;
 
-
-import com.example.booking.domain.Book;
 import com.example.booking.domain.BookView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class BookViewWriteStorage {
 
     private final BookViewRepository bookViewRepository;

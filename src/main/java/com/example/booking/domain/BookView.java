@@ -1,6 +1,5 @@
 package com.example.booking.domain;
 
-import com.example.booking.persistence.BookEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class BookView {
-
     private Long id;
     private String userEmail;
-    private BookEntity book;
+    private Long bookId;
 }

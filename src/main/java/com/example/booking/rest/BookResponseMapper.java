@@ -18,6 +18,7 @@ public class BookResponseMapper {
                 .details(book.getDetails())
                 .price(String.valueOf(book.getPrice()))
                 .image(book.getImage())
+                .deleted(book.getDeleted())
                 .createdAt(book.getCreatedAt())
                 .build();
     }

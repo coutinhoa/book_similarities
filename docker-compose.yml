@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   book-postgresql:
     image: 'bitnami/postgresql:15.3.0'

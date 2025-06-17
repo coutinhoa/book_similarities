@@ -51,22 +51,21 @@ public class BookReadStorage {
         Map<Long, Double> similarityScores = new HashMap<>();
 
         for (Map.Entry<Long, int[]> entry : bookVectors.entrySet()) {
-            Long otherBookId = entry.getKey();
-            if (otherBookId.equals(receivedBookId)) continue;
+            Long currentBookId = entry.getKey();
+            if (currentBookId.equals(receivedBookId)) continue;
 
-            int[] otherVector = entry.getValue();
-            double dot = 0, normA = 0, normB = 0;
+            int[] currentVector = entry.getValue();
+            double numerator = 0, normA = 0, normB = 0;
 
             for (int i = 0; i < targetVector.length; i++) {
-                dot += targetVector[i] * otherVector[i];
+                numerator += targetVector[i] * currentVector[i];
                 normA += targetVector[i] * targetVector[i];
-                normB += otherVector[i] * otherVector[i];
+                normB += currentVector[i] * currentVector[i];
             }
 
-            double similarity = (normA == 0 || normB == 0) ? 0 : dot / (Math.sqrt(normA) * Math.sqrt(normB));
-            similarityScores.put(otherBookId, similarity);
+            double similarity = (normA == 0 || normB == 0) ? 0 : numerator / (Math.sqrt(normA) * Math.sqrt(normB));
+            similarityScores.put(currentBookId, similarity);
         }
-
 
         //Sort and return top results
         return similarityScores.entrySet().stream()
@@ -78,3 +77,11 @@ public class BookReadStorage {
                 .collect(Collectors.toList());
     }
 }
+
+
+/*
+Value Range: The cosine similarity ranges from -1 to 1:
+1: Indicates that the vectors are identical in orientation (perfectly similar).
+0: Indicates that the vectors are orthogonal (no similarity).
+-1: Indicates that the vectors are diametrically opposed (completely dissimilar).
+* */

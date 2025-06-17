@@ -1,4 +1,4 @@
-CREATE TABLE T_BOOK(
+CREATE TABLE IF NOT EXISTS T_BOOK(
     id bigserial primary key,
     name varchar(255) NOT NULL,
     details text NOT NULL,

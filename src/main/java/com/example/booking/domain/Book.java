@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,5 +18,5 @@ public class Book {
     private BigDecimal price;
     private String image;
     private Boolean deleted = Boolean.FALSE;
-    private String createdAt;
+    private LocalDateTime createdAt;
 }

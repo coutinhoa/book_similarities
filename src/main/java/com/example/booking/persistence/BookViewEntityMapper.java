@@ -1,6 +1,5 @@
 package com.example.booking.persistence;
 
-import com.example.booking.domain.Book;
 import com.example.booking.domain.BookView;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +11,11 @@ public class BookViewEntityMapper {
             return null;
         }
         return BookViewEntity.builder()
-                .id(bookView.getId())
+                .id(bookView.getId() != null ? bookView.getId() : null)
                 .userEmail(bookView.getUserEmail())
+                .book(BookEntity.builder()
+                        .id(bookView.getBookId())
+                        .build())
                 .build();
     }
 

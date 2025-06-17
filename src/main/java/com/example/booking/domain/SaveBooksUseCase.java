@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -39,7 +40,7 @@ public class SaveBooksUseCase {
                 String[] nextLine;
                 while ((nextLine = csvReader.readNext()) != null) {
                     if (nextLine.length < 5) {
-                        System.out.println("Skipping row with insufficient columns");
+                        System.out.println("Skipping row with insufficient columns: " + Arrays.toString(nextLine));
                         continue;
                     }
                     Long id = Long.valueOf(nextLine[0].trim());
@@ -55,7 +56,7 @@ public class SaveBooksUseCase {
                             .price(price)
                             .image(image)
                             .deleted(Boolean.FALSE)
-                            .createdAt(LocalDateTime.now().toString())
+                            .createdAt(LocalDateTime.now())
                             .build();
 
                     books.add(book);
