@@ -19,6 +19,7 @@ public class BookController {
     private final SaveBooksUseCase saveBooksUseCase;
     private final BookResponseMapper bookMapper;
     private final GetBooksUseCase getBooksUseCase;
+    private final GetSimilarBooksUseCase getSimilarBooksUseCase;
     private final LoginValidationUseCase loginValidationUseCase;
     private final SaveBookViewsUseCase saveBookViewsUseCase;
 
@@ -84,7 +85,7 @@ public class BookController {
             @RequestParam(name = "userEmail") String userEmail) {
 
         saveBookViewsUseCase.createBookView(bookId, userEmail);
-        List<Book> similarBooks = getBooksUseCase.getSimilarBooks(bookId);
+        List<Book> similarBooks = getSimilarBooksUseCase.getSimilarBooks(bookId);
 
         if (similarBooks.isEmpty()) {
             return ResponseEntity.noContent().build();

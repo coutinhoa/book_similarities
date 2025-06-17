@@ -21,8 +21,4 @@ public class GetBooksUseCase {
     public List<Book> getAllBooks() {
         return bookReadStorage.getAllBooks();
     }
-
-    public List<Book> getSimilarBooks(Long bookId) {
-        return bookReadStorage.calculateSimilarities(bookId);
-    }
 }
