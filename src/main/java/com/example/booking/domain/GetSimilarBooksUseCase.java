@@ -70,8 +70,17 @@ public class GetSimilarBooksUseCase {
 }
 
 /*
-Value Range: The cosine similarity ranges from -1 to 1:
-1: Indicates that the vectors are identical in orientation (perfectly similar).
-0: Indicates that the vectors are orthogonal (no similarity).
--1: Indicates that the vectors are diametrically opposed (completely dissimilar).
+Value Range: The cosine similarity ranges from 0 to 1:
+Cosine Similarity =1: Indicates that the vectors are identical in orientation (perfectly similar).
+book1 = [0, 1, 1, 0]
+book2 = [0, 1, 1, 0]
+
+Cosine Similarity = 0.5: Indicates moderate similarity.Only one shared reader (user2), partial overlap.
+book1 = [0, 1, 1, 0]
+book2 = [1, 1, 0, 0]
+
+
+Cosine Similarity = 0: Indicates that the vectors are orthogonal (no similarity).
+book1 = [0, 1, 1, 0]
+book3 = [1, 0, 0, 1]
 * */
