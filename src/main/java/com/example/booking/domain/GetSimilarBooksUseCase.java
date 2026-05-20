@@ -31,7 +31,8 @@ public class GetSimilarBooksUseCase {
             Long bookId = bookView.getId();
             String userEmail = bookView.getUserEmail();
             int userIndex = users.indexOf(userEmail);
-            bookVectors.computeIfAbsent(bookId, k -> new int[users.size()])[userIndex] = 1;
+            int[] bookVector = bookVectors.computeIfAbsent(bookId, k -> new int[users.size()]);
+            bookVector[userIndex] = 1;
             //A 1 means this user viewed the book, 0 means they didn’t.
             //bookVectors.get(1) = [0, 0, 1] means the first and second user did not see the book, and the third did.
         }
