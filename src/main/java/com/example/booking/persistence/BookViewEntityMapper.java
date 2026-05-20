@@ -26,6 +26,7 @@ public class BookViewEntityMapper {
         return BookView.builder()
                 .id(bookViewEntity.getId())
                 .userEmail(bookViewEntity.getUserEmail())
+                .bookId(bookViewEntity.getBook() != null ? bookViewEntity.getBook().getId() : null)
                 .build();
     }
 }
